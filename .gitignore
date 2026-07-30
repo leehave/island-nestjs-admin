@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+server/node_modules/
+web-antd/node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# web folder (not needed)
+web/
