@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   App,
   Button,
+  Col,
   Space,
   message,
   Dropdown,
@@ -26,9 +27,9 @@ import {
   PageContainer,
   ProTable,
   ProColumns,
+  ProForm,
   ProFormText,
   ProFormSelect,
-  ProFormRadio,
 } from '@ant-design/pro-components';
 import { queryDictsByType } from '@/services/dict';
 import { queryJobPage, deleteJob, runJob } from '@/services/monitor';
@@ -224,16 +225,6 @@ export const Component: React.FC<unknown> = () => {
       <ProFormSelect
         name="jobGroup"
         label={<T id="page.job.field.jobGroup" />}
-        placeholder={t('component.form.placeholder.sel', {
-          label: t('page.job.field.jobGroup'),
-        })}
-        request={async () => {
-          const res = await queryDictsByType('sys_job_group');
-          return res.data.map((dict) => ({
-            label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-            value: Number(dict.dictValue),
-          }));
-        }}
         rules={[
           {
             required: true,
@@ -241,6 +232,10 @@ export const Component: React.FC<unknown> = () => {
               label: t('page.job.field.jobGroup'),
             }),
           },
+        ]}
+        options={[
+          { label: t('dict.job.group.default'), value: 1 },
+          { label: t('dict.job.group.system'), value: 2 },
         ]}
       />
       <ProFormText
@@ -258,28 +253,26 @@ export const Component: React.FC<unknown> = () => {
           },
         ]}
       />
-      <Form.Item
-        name="cronExpression"
-        label={<T id="page.job.field.cron" />}
-        initialValue="* * * * *"
-        rules={[
-          {
-            required: true,
-            message: t('component.form.placeholder', {
-              label: t('page.job.field.cron'),
-            }),
-          },
-        ]}
-      >
-        <CronSelect />
-      </Form.Item>
-      <ProFormRadio.Group
-        radioType="button"
+      <Col span={20}>
+        <ProForm.Item
+          name="cronExpression"
+          label={<T id="page.job.field.cron />}
+          initialValue="* * * * *"
+          rules={[
+            {
+              required: true,
+              message: t('component.form.placeholder', {
+                label: t('page.job.field.cron),
+              }),
+            },
+          ]}
+        >
+          <CronSelect />
+        </ProForm.Item>
+      </Col>
+      <ProFormSelect
         name="misfirePolicy"
         label={<T id="page.job.field.run" />}
-        placeholder={t('component.form.placeholder.sel', {
-          label: t('page.job.field.run'),
-        })}
         initialValue="1"
         valueEnum={{
           '1': { text: <T id="page.job.run.immediate" /> },
@@ -287,33 +280,23 @@ export const Component: React.FC<unknown> = () => {
           '3': { text: <T id="page.job.run.quit" /> },
         }}
       />
-      <ProFormRadio.Group
-        layout="horizontal"
+      <ProFormSelect
         name="concurrent"
         label={<T id="page.job.field.isConcurrent" />}
-        placeholder={t('component.form.placeholder.sel', {
-          label: t('page.job.field.isConcurrent'),
-        })}
         initialValue="1"
         valueEnum={{
           '0': { text: <T id="page.job.concurrent.true" /> },
           '1': { text: <T id="page.job.concurrent.false" /> },
         }}
       />
-      <ProFormRadio.Group
-        layout="horizontal"
+      <ProFormSelect
         name="status"
-        layout="horizontal"
         label={<T id="component.field.status" />}
-        placeholder={t('component.field.status.placeholder')}
         initialValue={1}
-        request={async () => {
-          const res = await queryDictsByType('sys_job_status');
-          return res.data.map((dict) => ({
-            label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-            value: Number(dict.dictValue),
-          }));
-        }}
+        options={[
+          { label: t('dict.status.normal'), value: 1 },
+          { label: t('dict.status.disable'), value: 0 },
+        ]}
       />
     </>
   );

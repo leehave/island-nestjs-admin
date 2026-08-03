@@ -30,7 +30,6 @@ import {
   ProForm,
   ProFormText,
   ProFormSelect,
-  ProFormRadio,
   ProFormTreeSelect,
   ProFormTextArea,
 } from '@ant-design/pro-components';
@@ -97,6 +96,30 @@ export const Component: React.FC<unknown> = () => {
   const [deptId, setDeptId] = useState<React.Key>();
   const responsive = useResponsive();
   const t = useT();
+  const { data: deptTreeOptions } = useRequest(async () => {
+    try {
+      const res = await queryDeptTree();
+      return res.data || [];
+    } catch {
+      return [];
+    }
+  });
+  const { data: postOptions } = useRequest(async () => {
+    try {
+      const res = await queryAllPost();
+      return (res.data || []).map((post) => ({ label: post.name, value: post.id }));
+    } catch {
+      return [];
+    }
+  });
+  const { data: roleOptions } = useRequest(async () => {
+    try {
+      const res = await queryAllRole();
+      return (res.data || []).map((role) => ({ label: role.name, value: role.id }));
+    } catch {
+      return [];
+    }
+  });
 
   const columns: ProColumns[] = [
     {
@@ -244,7 +267,7 @@ export const Component: React.FC<unknown> = () => {
                       message: t('page.user.field.newPswd.rule'),
                     },
                   ]}
-                  colProps={{ span: 24 }}
+                  colProps={{ span: 20 }}
                 />
               </ModalForm>
             </PermissionGuard>
@@ -326,26 +349,36 @@ export const Component: React.FC<unknown> = () => {
         <ProFormSelect
           name="gender"
           label={<T id="page.user.field.sex" />}
-          placeholder={t('component.form.placeholder.sel', {
-            label: t('page.user.field.sex'),
-          })}
-          request={async () => {
-            const res = await queryDictsByType('sys_user_sex');
-            return res.data.map((dict) => ({
-              label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-              value: dict.dictValue,
-            }));
-          }}
+          options={[
+            { label: '男', value: '1' },
+            { label: '女', value: '2' },
+          ]}
         />
       </ProForm.Group>
 
       <ProForm.Group title={<T id="page.user.group.auth" />}>
-        <ProFormTreeSelect
-          name="dept_id"
-          label={<T id="page.user.field.dept" />}
-          placeholder={t('component.form.placeholder.sel', {
-            label: t('page.user.field.dept'),
-          })}
+        <Col span={20}>
+          <ProForm.Item
+            name="dept_id"
+            label={<T id="page.user.field.dept" />}
+            rules={[
+              {
+                required: true,
+                message: t('component.form.placeholder.sel', {
+                  label: t('page.user.field.dept'),
+                }),
+              },
+            ]}
+          >
+            <TreeSelect
+              treeData={deptTreeOptions}
+              fieldNames={{ label: 'label', value: 'id', children: 'children' }}
+              placeholder={t('component.form.placeholder.sel', {
+                label: t('page.user.field.dept'),
+              })}
+            />
+          </ProForm.Item>
+        </Col>
           rules={[
             {
               required: true,
@@ -356,43 +389,22 @@ export const Component: React.FC<unknown> = () => {
           ]}
           fieldProps={{
             fieldNames: { label: 'label', value: 'id', children: 'children' },
-          }}
-          request={async () => {
-            const res = await queryDeptTree();
-            return res.data;
+            treeData: deptTreeOptions,
           }}
         />
         <ProFormSelect
           name="post_ids"
           label={<T id="page.user.field.post" />}
-          placeholder={t('component.form.placeholder', {
-            label: t('page.user.field.post'),
-          })}
           initialValue={[]}
           mode="multiple"
-          request={async () => {
-            const res = await queryAllPost();
-            return res.data.map((post) => ({
-              label: post.name,
-              value: post.id,
-            }));
-          }}
+          options={postOptions || []}
         />
         <ProFormSelect
           name="role_ids"
           label={<T id="page.user.field.role" />}
-          placeholder={t('component.form.placeholder', {
-            label: t('page.user.field.role'),
-          })}
           initialValue={[]}
           mode="multiple"
-          request={async () => {
-            const res = await queryAllRole();
-            return res.data.map((role) => ({
-              label: role.name,
-              value: role.id,
-            }));
-          }}
+          options={roleOptions || []}
         />
       </ProForm.Group>
       {souce === 'add' && (
@@ -416,10 +428,8 @@ export const Component: React.FC<unknown> = () => {
           ]}
         />
       )}
-      <ProFormRadio.Group
-        layout="horizontal"
+      <ProFormSelect
         name="status"
-        layout="horizontal"
         label={<T id="component.field.status" />}
         initialValue={1}
         options={[

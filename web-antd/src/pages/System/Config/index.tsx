@@ -23,7 +23,7 @@ import {
   ProTable,
   ProColumns,
   ProFormText,
-  ProFormRadio,
+  ProFormSelect,
   ProFormTextArea,
 } from '@ant-design/pro-components';
 import { queryDictsByType } from '@/services/dict';
@@ -196,21 +196,14 @@ export const Component: React.FC<unknown> = () => {
           },
         ]}
       />
-      <ProFormRadio.Group
-        layout="horizontal"
+      <ProFormSelect
         name="input_type"
         label={<T id="page.config.field.isSys" />}
-        placeholder={t('component.form.placeholder', {
-          label: t('page.config.field.isSys'),
-        })}
         initialValue="Y"
-        request={async () => {
-          const res = await queryDictsByType('sys_yes_no');
-          return res.data.map((dict) => ({
-            label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-            value: Number(dict.dictValue),
-          }));
-        }}
+        options={[
+          { label: t('dict.option.yes'), value: 'Y' },
+          { label: t('dict.option.no'), value: 'N' },
+        ]}
       />
       <ProFormTextArea
         name="remark"

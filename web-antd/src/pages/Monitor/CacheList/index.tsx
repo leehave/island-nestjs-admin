@@ -12,7 +12,6 @@ import {
   Col,
   Tooltip,
   Popconfirm,
-  Form,
   Input,
   message,
   Modal,
@@ -24,6 +23,7 @@ import {
   PageContainer,
   ProCard,
   ProTable,
+  ProForm,
   ProFormText,
   DrawerForm,
 } from '@ant-design/pro-components';
@@ -176,12 +176,14 @@ const CacheKeyList: React.FC<CacheKeyListProps> = ({ cacheName }) => {
           name="cacheKey"
           label={<T id="page.cache.field.cacheKey" />}
         />
-        <Form.Item
-          name="cacheValue"
-          label={<T id="page.cache.field.cacheValue" />}
-        >
-          <Input.TextArea rows={20} readOnly />
-        </Form.Item>
+        <Col span={20}>
+          <ProForm.Item
+            name="cacheValue"
+            label={<T id="page.cache.field.cacheValue" />}
+          >
+            <Input.TextArea rows={20} readOnly />
+          </ProForm.Item>
+        </Col>
       </DrawerForm>
     </>
   );

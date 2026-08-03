@@ -61,10 +61,11 @@ const EditWrapperForm: React.FC<EditFormWrapperProps> = (props) => {
       formRef={formRef}
       layout="horizontal"
       labelCol={{ span: 4 }}
-      wrapperCol={{ span: 14 }}
+      wrapperCol={{ span: 20 }}
       grid
       rowProps={{ gutter: [16, 0] }}
-      colProps={{ span: 24 }}
+      colProps={{ span: 20 }}
+
       submitter={{
         render: formProps?.readonly
           ? false

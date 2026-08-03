@@ -57,7 +57,7 @@ const SafeSettings = () => {
           wrapperCol={{ span: 14 }}
           grid
           rowProps={{ gutter: [16, 0] }}
-          colProps={{ span: 24 }}
+          colProps={{ span: 20 }}
           submitter={{
             render: ({ form }) => {
               return (

@@ -15,7 +15,7 @@ const BaseSettings = () => {
       wrapperCol={{ span: 14 }}
       grid
       rowProps={{ gutter: [16, 0] }}
-      colProps={{ span: 24 }}
+      colProps={{ span: 20 }}
       request={async () => {
         const res = await getProfile();
         const data = res.data || res;

@@ -6,7 +6,7 @@ import {
   message,
   Dropdown,
   Tooltip,
-  Form,
+  Col,
   Tree,
   TreeProps,
   Popconfirm,
@@ -27,8 +27,8 @@ import {
   PageContainer,
   ProTable,
   ProColumns,
+  ProForm,
   ProFormText,
-  ProFormRadio,
   ProFormSelect,
   ProFormDigit,
   ProFormTextArea,
@@ -157,7 +157,7 @@ const NodeTree: React.FC<NodeTreeProps> = ({
       style={{
         padding: token.paddingSM,
         overflow: 'auto',
-        maxHeight: 320,
+        height: 320,
         border: '1px solid ' + token.colorBorder,
         borderRadius: token.borderRadius,
       }}
@@ -184,6 +184,7 @@ export const Component: React.FC<unknown> = () => {
   const t = useT();
   const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<API.UserInfo[]>([]);
+
 
   const columns: ProColumns[] = [
     {
@@ -328,20 +329,20 @@ export const Component: React.FC<unknown> = () => {
           },
         ]}
       />
-      <Form.Item
-        name="menu_ids"
-        label={<T id="page.role.field.authMenu" />}
-        initialValue={[]}
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 20 }}
-      >
-        <NodeTree
-          request={async () => {
-            const res = await queryMenuTree();
-            return res.data;
-          }}
-        />
-      </Form.Item>
+      <Col span={20}>
+        <ProForm.Item
+          name="menu_ids"
+          label={<T id="page.role.field.authMenu" />}
+          initialValue={[]}
+        >
+          <NodeTree
+            request={async () => {
+              const res = await queryMenuTree();
+              return res.data;
+            }}
+          />
+        </ProForm.Item>
+      </Col>
       <ProFormDigit
         name="sort"
         label={<T id="component.field.sort" />}
@@ -359,30 +360,14 @@ export const Component: React.FC<unknown> = () => {
         ]}
         fieldProps={{ precision: 0 }}
       />
-      <ProFormRadio.Group
-        layout="horizontal"
+      <ProFormSelect
         name="status"
-        layout="horizontal"
         label={<T id="component.field.status" />}
-        placeholder={t('component.form.placeholder.sel', {
-          label: t('component.field.status'),
-        })}
         initialValue={1}
-        rules={[
-          {
-            required: true,
-            message: t('component.form.placeholder', {
-              label: t('component.field.status'),
-            }),
-          },
+        options={[
+          { label: t('dict.status.normal'), value: 1 },
+          { label: t('dict.status.disable'), value: 0 },
         ]}
-        request={async () => {
-          const res = await queryDictsByType('sys_normal_disable');
-          return res.data.map((dict) => ({
-            label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-            value: Number(dict.dictValue),
-          }));
-        }}
       />
       <ProFormTextArea
         name="remark"
@@ -447,21 +432,21 @@ export const Component: React.FC<unknown> = () => {
           if (dataScope !== '2') return null;
 
           return (
-            <Form.Item
-              name="dept_ids"
-              label={<T id="page.role.field.authScope" />}
-              initialValue={[]}
-              labelCol={{ span: 4 }}
-              wrapperCol={{ span: 20 }}
-            >
-              <NodeTree
-                defaultExpandAll
-                request={async () => {
-                  const res = await queryDeptTree();
-                  return res.data;
-                }}
-              />
-            </Form.Item>
+            <Col span={20}>
+              <ProForm.Item
+                name="dept_ids"
+                label={<T id="page.role.field.authScope" />}
+                initialValue={[]}
+              >
+                <NodeTree
+                  defaultExpandAll
+                  request={async () => {
+                    const res = await queryDeptTree();
+                    return res.data;
+                  }}
+                />
+              </ProForm.Item>
+            </Col>
           );
         }}
       </ProFormDependency>

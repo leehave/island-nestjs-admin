@@ -23,7 +23,7 @@ import {
   ProFormText,
   ProFormTextArea,
   ProFormDigit,
-  ProFormRadio,
+  ProFormSelect,
 } from '@ant-design/pro-components';
 import React, { useRef, useState } from 'react';
 import { queryPostPage, deletePost } from '@/services/post';
@@ -185,20 +185,14 @@ export const Component: React.FC<unknown> = () => {
           { required: true, message: t('component.field.sort.placeholder') },
         ]}
       />
-      <ProFormRadio.Group
-        layout="horizontal"
+      <ProFormSelect
         name="status"
-        layout="horizontal"
         label={<T id="component.field.status" />}
-        placeholder={t('component.field.status.placeholder')}
         initialValue={1}
-        request={async () => {
-          const res = await queryDictsByType('sys_normal_disable');
-          return res.data.map((dict) => ({
-            label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-            value: Number(dict.dictValue),
-          }));
-        }}
+        options={[
+          { label: t('dict.status.normal'), value: 1 },
+          { label: t('dict.status.disable'), value: 0 },
+        ]}
       />
       <ProFormTextArea
         name="remark"

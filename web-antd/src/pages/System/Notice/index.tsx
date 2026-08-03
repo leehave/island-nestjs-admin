@@ -7,9 +7,9 @@ import {
   PageContainer,
   ProTable,
   ProColumns,
+  ProForm,
   ProFormText,
   ProFormSelect,
-  ProFormRadio,
 } from '@ant-design/pro-components';
 import { queryDictsByType } from '@/services/dict';
 import { queryNoticePage, deleteNotice } from '@/services/notice';
@@ -157,16 +157,10 @@ export const Component: React.FC<unknown> = () => {
       <ProFormSelect
         name="type"
         label={<T id="page.notice.field.type" />}
-        placeholder={t('component.form.placeholder.sel', {
-          label: t('page.notice.field.type'),
-        })}
-        request={async () => {
-          const res = await queryDictsByType('sys_notice_type');
-          return res.data.map((dict) => ({
-            label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-            value: Number(dict.dictValue),
-          }));
-        }}
+        options={[
+          { label: t('dict.notice.type.notice'), value: 1 },
+          { label: t('dict.notice.type.announcement'), value: 2 },
+        ]}
         rules={[
           {
             required: true,
@@ -176,26 +170,22 @@ export const Component: React.FC<unknown> = () => {
           },
         ]}
       />
-      <Form.Item
-        name="content"
-        label={<T id="page.notice.field.content" />}
-      >
-        <WangEdtior />
-      </Form.Item>
-      <ProFormRadio.Group
-        layout="horizontal"
+      <Col span={20}>
+        <ProForm.Item
+          name="content"
+          label={<T id="page.notice.field.content />}
+        >
+          <WangEdtior />
+        </ProForm.Item>
+      </Col>
+      <ProFormSelect
         name="status"
-        layout="horizontal"
         label={<T id="component.field.status" />}
-        placeholder={t('component.field.status.placeholder')}
         initialValue={1}
-        request={async () => {
-          const res = await queryDictsByType('sys_notice_status');
-          return res.data.map((dict) => ({
-            label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-            value: Number(dict.dictValue),
-          }));
-        }}
+        options={[
+          { label: t('dict.status.normal'), value: 1 },
+          { label: t('dict.status.disable'), value: 0 },
+        ]}
       />
     </>
   );

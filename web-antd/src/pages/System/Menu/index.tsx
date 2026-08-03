@@ -11,7 +11,6 @@ import {
   ProFormSelect,
   ProFormDigit,
   ProFormTreeSelect,
-  ProFormRadio,
   ProFormDependency,
 } from '@ant-design/pro-components';
 import { queryDictsByType } from '@/services/dict';
@@ -180,15 +179,10 @@ export const Component: React.FC<unknown> = () => {
           ];
         }}
       />
-      <ProFormRadio.Group
-        layout="horizontal"
+      <ProFormSelect
         name="type"
         label={<T id="page.menu.field.menuType" />}
-        placeholder={t('component.form.placeholder.sel', {
-          label: t('page.menu.field.menuType'),
-        })}
         initialValue={1}
-        radioType="button"
         options={[
           { label: <T id="page.menu.type.option.m" />, value: 1 },
           { label: <T id="page.menu.type.option.c" />, value: 2 },
@@ -258,12 +252,9 @@ export const Component: React.FC<unknown> = () => {
               )}
             </ProForm.Group>
             {[2].includes(type) && (
-              <ProFormRadio.Group
+              <ProFormSelect
                 name="is_iframe"
                 label={<T id="page.menu.field.isLink" />}
-                placeholder={t('component.form.placeholder.sel', {
-                  label: t('page.menu.field.isLink'),
-                })}
                 initialValue={2}
                 options={[
                   { label: <T id="dict.status.true" />, value: 1 },
@@ -340,12 +331,9 @@ export const Component: React.FC<unknown> = () => {
               fieldProps={{ precision: 0 }}
             />
             {[2].includes(type) && (
-              <ProFormRadio.Group
+              <ProFormSelect
                 name="is_keep_alive"
                 label={<T id="page.menu.field.isCache" />}
-                placeholder={t('component.form.placeholder.sel', {
-                  label: t('page.menu.field.isCache'),
-                })}
                 initialValue={2}
                 options={[
                   { label: <T id="dict.status.true" />, value: 1 },
@@ -355,36 +343,24 @@ export const Component: React.FC<unknown> = () => {
             )}
             <ProForm.Group>
               {[1, 2].includes(type) && (
-                <ProFormRadio.Group
+                <ProFormSelect
                   name="is_hidden"
                   label={<T id="page.menu.field.status.visible" />}
-                  placeholder={t('component.form.placeholder.sel', {
-                    label: t('page.menu.field.status.visible'),
-                  })}
                   initialValue={2}
-                  request={async () => {
-                    const res = await queryDictsByType('sys_show_hide');
-                    return res.data.map((dict) => ({
-                      label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-                      value: dict.dictValue,
-                    }));
-                  }}
+                  options={[
+                    { label: t('dict.status.show'), value: 1 },
+                    { label: t('dict.status.hide'), value: 2 },
+                  ]}
                 />
               )}
-              <ProFormRadio.Group
+              <ProFormSelect
                 name="status"
                 label={<T id="page.menu.field.status.menu" />}
-                placeholder={t('component.form.placeholder.sel', {
-                  label: t('page.menu.field.status.menu'),
-                })}
                 initialValue={1}
-                request={async () => {
-                  const res = await queryDictsByType('sys_normal_disable');
-                  return res.data.map((dict) => ({
-                    label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-                    value: dict.dictValue,
-                  }));
-                }}
+                options={[
+                  { label: t('dict.status.normal'), value: 1 },
+                  { label: t('dict.status.disable'), value: 0 },
+                ]}
               />
             </ProForm.Group>
           </>
