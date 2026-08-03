@@ -27,7 +27,7 @@ export class RoleController {
   @RequirePermission('core:role:index')
   @Get('all')
   findAllRoles() {
-    return this.roleService.findAll({});
+    return this.roleService.getAccessRoleList();
   }
 
   @ApiOperation({ summary: '角色树' })

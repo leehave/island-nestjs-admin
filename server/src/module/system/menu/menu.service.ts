@@ -200,7 +200,7 @@ export class MenuService {
       where: { roleId },
       select: { menuId: true },
     });
-    const checkedKeys = menuIds.map((item) => item.menuId);
+    const checkedKeys = menuIds.map((item) => Number(item.menuId));
     return ResultData.ok({ menus: tree, checkedKeys });
   }
 
@@ -367,7 +367,7 @@ export class MenuService {
       where: { roleId },
       select: { menuId: true },
     });
-    const checkedKeys = menuIds.map((item) => item.menuId);
+    const checkedKeys = menuIds.map((item) => Number(item.menuId));
     return ResultData.ok({ menus: tree, checkedKeys });
   }
 

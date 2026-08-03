@@ -21,7 +21,7 @@ export class PostController {
   @RequirePermission('core:post:index')
   @Get('enabled')
   enabled() {
-    return this.postService.findAll({ status: 1 } as ListPostDto);
+    return this.postService.getAccessPostList();
   }
 
   @ApiOperation({ summary: '岗位详情' })

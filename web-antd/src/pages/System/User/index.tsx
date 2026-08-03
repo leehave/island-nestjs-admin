@@ -2,6 +2,7 @@ import {
   Button,
   Space,
   Tree,
+  TreeSelect,
   Empty,
   message,
   Tooltip,
@@ -70,6 +71,12 @@ const DeptTree: React.FC<{ onSelect: (key: React.Key) => void }> = ({
     />
   );
 };
+
+const GENDER_OPTIONS = [
+  { label: '男', value: '1' },
+  { label: '女', value: '2' },
+  { label: '未知', value: '3' },
+];
 
 /**
  *  删除节点
@@ -349,10 +356,13 @@ export const Component: React.FC<unknown> = () => {
         <ProFormSelect
           name="gender"
           label={<T id="page.user.field.sex" />}
-          options={[
-            { label: '男', value: '1' },
-            { label: '女', value: '2' },
-          ]}
+          options={GENDER_OPTIONS}
+          fieldProps={{
+            labelRender: ({ value }) => {
+              const matched = GENDER_OPTIONS.find((opt) => opt.value === value);
+              return matched ? matched.label : '';
+            },
+          }}
         />
       </ProForm.Group>
 
@@ -379,19 +389,6 @@ export const Component: React.FC<unknown> = () => {
             />
           </ProForm.Item>
         </Col>
-          rules={[
-            {
-              required: true,
-              message: t('component.form.placeholder.sel', {
-                label: t('page.user.field.dept'),
-              }),
-            },
-          ]}
-          fieldProps={{
-            fieldNames: { label: 'label', value: 'id', children: 'children' },
-            treeData: deptTreeOptions,
-          }}
-        />
         <ProFormSelect
           name="post_ids"
           label={<T id="page.user.field.post" />}
