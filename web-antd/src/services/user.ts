@@ -36,7 +36,7 @@ export const addUser = (data: any) => {
 
 // 修改用户
 export const updateUser = (data: any) => {
-  return request<any>('/api/system/user/update/' + data.userId, {
+  return request<any>('/api/system/user/update/' + data.id, {
     method: 'PUT',
     data,
   });
@@ -58,7 +58,7 @@ export function deleteUser(userIds) {
 
 // 重置用户密码
 export function resetUserPwd(data: any) {
-  return request<any>('/api/system/user/reset-password/' + data.userId, {
+  return request<any>('/api/system/user/reset-password/' + data.id, {
     method: 'PUT',
     data,
   });

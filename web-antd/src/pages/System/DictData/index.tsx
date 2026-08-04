@@ -24,6 +24,7 @@ import {
   ProDescriptions,
   ProTable,
   ProColumns,
+  ProDescriptionsItemProps,
   ProFormText,
   ProFormDigit,
   ProFormSelect,
@@ -106,8 +107,8 @@ const TableList: React.FC<TableListProps> = (props) => {
       request: async () => {
         const res = await queryDictsByType('sys_normal_disable');
         return res.data.map((dict) => ({
-          label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-          value: dict.dictValue,
+          label: dict.label,
+          value: dict.value,
         }));
       },
     },
@@ -242,7 +243,10 @@ const TableList: React.FC<TableListProps> = (props) => {
         }}
         fieldProps={{
           optionRender: (option) => {
-            const statusMap = {
+            const statusMap: Record<
+              string,
+              'default' | 'error' | 'success' | 'warning' | 'processing'
+            > = {
               Default: 'default',
               Processing: 'processing',
               Success: 'success',
@@ -253,7 +257,7 @@ const TableList: React.FC<TableListProps> = (props) => {
             return (
               <Badge
                 offset={[4, 0]}
-                status={statusMap[option.value] || ''}
+                status={statusMap[String(option.value)] ?? 'default'}
                 text={option.label}
               />
             );
@@ -408,7 +412,7 @@ export const Component: React.FC<unknown> = () => {
     },
   );
 
-  const columns: ProColumns[] = [
+  const columns: ProDescriptionsItemProps[] = [
     {
       title: <T id="page.dict.field.id" />,
       dataIndex: 'dictId',
@@ -430,8 +434,8 @@ export const Component: React.FC<unknown> = () => {
       request: async () => {
         const res = await queryDictsByType('sys_normal_disable');
         return res.data.map((dict) => ({
-          label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-          value: dict.dictValue,
+          label: dict.label,
+          value: dict.value,
         }));
       },
     },

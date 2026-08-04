@@ -6,7 +6,13 @@ declare namespace API {
 
   type PageResponse<T = any> = Response & {
     rows: T[];
+    list?: T[];
     total: number;
+  };
+
+  /** 通用行数据类型（各页面 id 字段命名不一，如 jobId/userId/postId） */
+  type UserInfo = {
+    [key: string]: any;
   };
 
   /** 租户项 */
@@ -16,12 +22,11 @@ declare namespace API {
     is_default: boolean;
   };
 
-  /** Result GET /api/core/captcha */
+  /** Result GET /api/core/captcha (拦截器已将 data 展开到顶层) */
   type CaptchaImageResult = Response & {
-    data: {
-      uuid: string;
-      image: string;
-    };
+    result: string;
+    uuid: string;
+    image: string;
   };
 
   /** Params POST /api/core/login */
@@ -77,4 +82,24 @@ declare namespace API {
 
   /** Result GET /system/dict/type/list */
   type DictTypePageResult = PageResponse<Dict.Type>;
+
+  /** 参数配置项 */
+  type ConfigItem = {
+    id: number;
+    name: string;
+    key: string;
+    value: string;
+    input_type: string;
+    remark: string;
+    create_time: string;
+    create_by: string;
+    update_time: string;
+    update_by: string;
+  };
+
+  /** Result GET /api/core/config/list */
+  type ConfigListResult = Response & {
+    list: ConfigItem[];
+    total: number;
+  };
 }

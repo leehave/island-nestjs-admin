@@ -22,6 +22,7 @@ import {
   ProDescriptions,
   ProTable,
   ProColumns,
+  ProDescriptionsItemProps,
 } from '@ant-design/pro-components';
 import { queryDictsByType } from '@/services/dict';
 import { getAllocatedUserList } from '@/services/user';
@@ -41,7 +42,7 @@ export const Component: React.FC<unknown> = () => {
   const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<API.UserInfo[]>([]);
 
-  const descriptionsColumns: ProColumns[] = [
+  const descriptionsColumns: ProDescriptionsItemProps[] = [
     {
       title: <T id="page.role.field.roleName" />,
       dataIndex: 'roleName',
@@ -59,8 +60,8 @@ export const Component: React.FC<unknown> = () => {
       request: async () => {
         const res = await queryDictsByType('sys_normal_disable');
         return res.data.map((dict) => ({
-          label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-          value: dict.dictValue,
+          label: dict.label,
+          value: dict.value,
         }));
       },
     },

@@ -7,21 +7,23 @@ import { useT, T } from '@/locales';
 const Fullscreen = {
   // 检查是否支持全屏
   isEnabled() {
+    const doc: any = document;
     return !!(
-      document.fullscreenEnabled ||
-      document.webkitFullscreenEnabled ||
-      document.mozFullScreenEnabled ||
-      document.msFullscreenEnabled
+      doc.fullscreenEnabled ||
+      doc.webkitFullscreenEnabled ||
+      doc.mozFullScreenEnabled ||
+      doc.msFullscreenEnabled
     );
   },
 
   // 获取当前全屏元素
   getFullscreenElement() {
+    const doc: any = document;
     return (
-      document.fullscreenElement ||
-      document.webkitFullscreenElement ||
-      document.mozFullScreenElement ||
-      document.msFullscreenElement ||
+      doc.fullscreenElement ||
+      doc.webkitFullscreenElement ||
+      doc.mozFullScreenElement ||
+      doc.msFullscreenElement ||
       null
     );
   },
@@ -42,14 +44,15 @@ const Fullscreen = {
 
   // 退出全屏
   exit() {
-    if (document.exitFullscreen) {
-      return document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      return document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      return document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-      return document.msExitFullscreen();
+    const doc: any = document;
+    if (doc.exitFullscreen) {
+      return doc.exitFullscreen();
+    } else if (doc.webkitExitFullscreen) {
+      return doc.webkitExitFullscreen();
+    } else if (doc.mozCancelFullScreen) {
+      return doc.mozCancelFullScreen();
+    } else if (doc.msExitFullscreen) {
+      return doc.msExitFullscreen();
     }
     return Promise.reject(new Error('Fullscreen API not available'));
   },

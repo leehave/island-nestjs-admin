@@ -83,7 +83,7 @@ const CaptchaImage: React.FC<{
   const { styles } = useStyles();
   const { refresh, data, loading, error } = useRequest(queryCaptchaImage, {
     onSuccess(res) {
-      const uuid = res?.data?.uuid || res?.uuid;
+      const uuid = res?.uuid;
       if (uuid) onSuccess(uuid);
     },
   });
@@ -112,7 +112,7 @@ const CaptchaImage: React.FC<{
   return (
     <Button className={styles.captchaImage} size="large" onClick={handleRefresh}>
       <img
-        src={data?.data?.image || data?.data?.img || data?.img}
+        src={data?.image}
         alt="captcha"
         style={{ width: 100, height: 40, display: 'block', cursor: 'pointer' }}
       />

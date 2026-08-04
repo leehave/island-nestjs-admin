@@ -199,7 +199,11 @@ type CacheListProps = {
   onChange: (cacheName: string) => void;
 };
 
-const CacheList: React.FC<CacheListProps> = forwardRef(
+type CacheListRef = {
+  reload: () => void;
+};
+
+const CacheList = forwardRef<CacheListRef, CacheListProps>(
   ({ cacheName, onChange }, ref) => {
     const t = useT();
     const actionRef = useRef<ActionType>();
@@ -306,7 +310,7 @@ const CacheList: React.FC<CacheListProps> = forwardRef(
 
 export const Component: React.FC = () => {
   const t = useT();
-  const ref = useRef<ActionType>();
+  const ref = useRef<CacheListRef>(null);
   const responsive = useResponsive();
   const [cacheName, setCacheName] = useState<string>('');
   return (

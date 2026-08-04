@@ -233,11 +233,14 @@ export const Component: React.FC<unknown> = () => {
                     ),
                   }}
                   options={Object.entries(icons).map(
-                    ([key, IconComponent]) => ({
-                      icon: <IconComponent />,
-                      label: key,
-                      value: key,
-                    }),
+                    ([key, IconComponent]) => {
+                      const Icon = IconComponent as React.ComponentType;
+                      return {
+                        icon: <Icon />,
+                        label: key,
+                        value: key,
+                      };
+                    },
                   )}
                 />
               )}

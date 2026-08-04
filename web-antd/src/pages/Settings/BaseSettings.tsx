@@ -98,8 +98,8 @@ const BaseSettings = () => {
         request={async () => {
           const res = await queryDictsByType('sys_user_sex');
           return res.data.map((dict) => ({
-            label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-            value: Number(dict.dictValue),
+            label: dict.label,
+            value: Number(dict.value),
           }));
         }}
       />

@@ -178,8 +178,8 @@ export const Component: React.FC<unknown> = () => {
       request: async () => {
         const res = await queryDictsByType('sys_normal_disable');
         return res.data.map((dict) => ({
-          label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-          value: dict.dictValue,
+          label: dict.label,
+          value: dict.value,
         }));
       },
     },
@@ -244,7 +244,7 @@ export const Component: React.FC<unknown> = () => {
                   try {
                     await resetUserPwd({
                       ...formValues,
-                      userId: record.userId,
+                      id: record.id,
                     });
                     hide();
                     message.success(t('page.user.restPswd.success'));
@@ -493,7 +493,7 @@ export const Component: React.FC<unknown> = () => {
                 </Button>
               </Dropdown>,
             ]}
-            params={{ deptId }}
+            params={{ dept_id: deptId }}
             request={async (params, sorter, filter) => {
               const { code, list, total } = await queryUserPage({
                 ...params,

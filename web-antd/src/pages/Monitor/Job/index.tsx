@@ -86,8 +86,8 @@ export const Component: React.FC<unknown> = () => {
       request: async () => {
         const res = await queryDictsByType('sys_job_group');
         return res.data.map((dict) => ({
-          label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-          value: dict.dictValue,
+          label: dict.label,
+          value: dict.value,
         }));
       },
     },
@@ -113,8 +113,8 @@ export const Component: React.FC<unknown> = () => {
       request: async () => {
         const res = await queryDictsByType('sys_job_status');
         return res.data.map((dict) => ({
-          label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-          value: dict.dictValue,
+          label: dict.label,
+          value: dict.value,
         }));
       },
     },
@@ -256,13 +256,13 @@ export const Component: React.FC<unknown> = () => {
       <Col span={20}>
         <ProForm.Item
           name="cronExpression"
-          label={<T id="page.job.field.cron />}
+          label={<T id="page.job.field.cron" />}
           initialValue="* * * * *"
           rules={[
             {
               required: true,
               message: t('component.form.placeholder', {
-                label: t('page.job.field.cron),
+                label: t('page.job.field.cron'),
               }),
             },
           ]}

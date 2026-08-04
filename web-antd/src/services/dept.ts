@@ -10,7 +10,7 @@ export const queryDeptTree = (params?: any, options?: { [key: string]: any }) =>
 };
 
 // 查询部门列表
-export const queryDeptList = (params, options?: { [key: string]: any }) => {
+export const queryDeptList = (params?: any, options?: { [key: string]: any }) => {
   return request<API.DeptListResult>('/api/system/dept/list', {
     method: 'GET',
     params: { ...params },

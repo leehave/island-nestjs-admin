@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { rawT, useT, T } from '@/locales';
+import { T } from '@/locales';
 import { queryDictsByType } from '@/services/dict';
 
 interface ViewOperlogWrapperForm {
@@ -13,7 +13,6 @@ interface ViewOperlogForm extends ViewOperlogWrapperForm {
 }
 
 const ViewOperlogWrapperForm: React.FC<ViewOperlogWrapperForm> = (props) => {
-  const t = useT();
   const { values } = props;
 
   return (
@@ -56,8 +55,8 @@ const ViewOperlogWrapperForm: React.FC<ViewOperlogWrapperForm> = (props) => {
         request={async () => {
           const res = await queryDictsByType('sys_common_status');
           return res.data.map((dict) => ({
-            label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-            value: dict.dictValue,
+            label: dict.label,
+            value: dict.value,
           }));
         }}
       >

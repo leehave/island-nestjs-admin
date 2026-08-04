@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Button, Space, message, Tooltip, Popconfirm, Modal, Form } from 'antd';
+import { Button, Space, message, Tooltip, Popconfirm, Modal, Form, Col } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import {
   ActionType,
@@ -63,8 +63,8 @@ export const Component: React.FC<unknown> = () => {
       request: async () => {
         const res = await queryDictsByType('sys_notice_type');
         return res.data.map((dict) => ({
-          label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-          value: dict.dictValue,
+          label: dict.label,
+          value: dict.value,
         }));
       },
     },
@@ -77,8 +77,8 @@ export const Component: React.FC<unknown> = () => {
       request: async () => {
         const res = await queryDictsByType('sys_notice_status');
         return res.data.map((dict) => ({
-          label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-          value: dict.dictValue,
+          label: dict.label,
+          value: dict.value,
         }));
       },
     },
@@ -173,7 +173,7 @@ export const Component: React.FC<unknown> = () => {
       <Col span={20}>
         <ProForm.Item
           name="content"
-          label={<T id="page.notice.field.content />}
+          label={<T id="page.notice.field.content" />}
         >
           <WangEdtior />
         </ProForm.Item>

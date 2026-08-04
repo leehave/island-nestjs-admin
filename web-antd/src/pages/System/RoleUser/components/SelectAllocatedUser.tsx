@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
-import { rawT, T } from '@/locales';
+import { T } from '@/locales';
 import { queryDictsByType } from '@/services/dict';
 import { getUnAllocatedUserList } from '@/services/user';
 import { updateAuthUser } from '@/services/role';
@@ -41,8 +41,8 @@ export const columns: ProColumns[] = [
     request: async () => {
       const res = await queryDictsByType('sys_normal_disable');
       return res.data.map((dict) => ({
-        label: dict.i18nKey ? rawT(dict.i18nKey) : dict.dictLabel,
-        value: dict.dictValue,
+        label: dict.label,
+        value: dict.value,
       }));
     },
   },

@@ -91,8 +91,8 @@ export const Component: React.FC<unknown> = () => {
       request: async () => {
         const res = await queryDictsByType('sys_yes_no');
         return res.data.map((dict) => ({
-          label: dict.i18nKey ? t(dict.i18nKey) : dict.dictLabel,
-          value: dict.dictValue,
+          label: dict.label,
+          value: dict.value,
         }));
       },
     },
@@ -240,7 +240,7 @@ export const Component: React.FC<unknown> = () => {
           <Button
             icon={<ReloadOutlined />}
             key="refresh"
-            onClick={() => handleModalVisible(true)}
+            onClick={() => actionRef.current?.reload()}
           >
             <T id="page.config.refresh" />
           </Button>,

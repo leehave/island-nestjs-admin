@@ -217,8 +217,8 @@ export const Component: React.FC<unknown> = () => {
       dataIndex: 'status',
       valueType: 'select',
       valueEnum: {
-        0: { text: t('dict.status.normal'), status: 'MALE' },
-        1: { text: t('dict.status.disable'), status: 'FEMALE' },
+        1: { text: t('dict.status.normal'), status: 'success' },
+        0: { text: t('dict.status.disable'), status: 'error' },
       },
       width: 120,
     },
@@ -286,7 +286,7 @@ export const Component: React.FC<unknown> = () => {
             </PermissionGuard>
             <PermissionGuard key="update3" requireds={['core:role:update']}>
               <Tooltip title={<T id="page.role.authUser" />}>
-                <Link to={`../role/${record.roleId}`}>
+                <Link to={`../role/${record.id}`}>
                   <Button type="link" size="small" icon={<UserOutlined />} />
                 </Link>
               </Tooltip>
