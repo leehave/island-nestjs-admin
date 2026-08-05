@@ -22,8 +22,8 @@ export class CreateConfigDto {
   name: string;
 
   @IsOptional()
-  @IsNumber()
-  input_type?: number;
+  @IsString()
+  input_type?: string;
 
   @IsOptional()
   @IsString()

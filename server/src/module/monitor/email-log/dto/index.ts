@@ -1,4 +1,4 @@
-import { IsString, IsArray, IsNumber, IsOptional, Length } from 'class-validator';
+import { IsString, IsArray, IsOptional, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { PagingDto } from '../../../../common/dto/index';
 
@@ -17,6 +17,6 @@ export class ListEmailLogDto extends PagingDto {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsNumber()
-  status?: number;
+  @IsString()
+  status?: string;
 }

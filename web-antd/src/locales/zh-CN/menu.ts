@@ -22,4 +22,10 @@ export default {
   'menu.monitor.server': '服务监控',
   'menu.monitor.cache': '缓存监控',
   'menu.monitor.cacheList': '缓存列表',
+  'menu.system.tenant': '租户管理',
+  'menu.system.plugin': '插件管理',
+  'menu.monitor.attachment': '附件管理',
+  'menu.monitor.database': '数据表维护',
+  'menu.monitor.emailLog': '邮件日志',
+  'menu.monitor.redis': 'Redis监控',
 };

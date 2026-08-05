@@ -31,4 +31,10 @@ export default {
   'dict.option.authScope.deptSelf': '本部门数据权限',
   'dict.option.authScope.deptBelow': '本部门及以下数据权限',
   'dict.option.authScope.onlyMe': '仅本人数据权限',
+  'dict.config.inputType.text': '文本',
+  'dict.config.inputType.textarea': '文本域',
+  'dict.config.inputType.select': '下拉选择',
+  'dict.config.inputType.switch': '开关',
+  'dict.config.inputType.number': '数字',
+  'dict.config.inputType.password': '密码',
 };

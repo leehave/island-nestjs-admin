@@ -31,4 +31,10 @@ export default {
   'dict.option.authScope.deptSelf': 'Own Department Data Only',
   'dict.option.authScope.deptBelow': 'Own Department and Sub-departments',
   'dict.option.authScope.onlyMe': 'My Data Only',
+  'dict.config.inputType.text': 'Text',
+  'dict.config.inputType.textarea': 'Textarea',
+  'dict.config.inputType.select': 'Select',
+  'dict.config.inputType.switch': 'Switch',
+  'dict.config.inputType.number': 'Number',
+  'dict.config.inputType.password': 'Password',
 };

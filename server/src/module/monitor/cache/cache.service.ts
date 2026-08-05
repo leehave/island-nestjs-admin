@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { RedisService } from '../../../redis/redis.service';
 import { ResultData } from '../../../common/utils/result';
+import { CacheEnum } from '../../../common/enum/index';
 
 @Injectable()
 export class CacheService {
@@ -61,12 +62,12 @@ export class CacheService {
    */
   async getFirstLevelKeys(pattern = '*') {
     const keys = await this.scanKeys(pattern);
-    const prefixes: Record<string, { key: string; count: number; type: string }> = {};
+    const prefixes: Record<string, { cacheName: string; remark: string; count: number; type: string }> = {};
     for (const key of keys) {
       const prefix = key.split(':')[0];
       if (!prefix) continue;
       if (!prefixes[prefix]) {
-        prefixes[prefix] = { key: prefix, count: 0, type: 'prefix' };
+        prefixes[prefix] = { cacheName: prefix, remark: '', count: 0, type: 'prefix' };
       }
       prefixes[prefix].count++;
     }
@@ -80,22 +81,16 @@ export class CacheService {
    */
   async getSecondLevelKeys(prefix: string) {
     const keys = await this.scanKeys(`${prefix}:*`);
-    const secondLevel: Record<string, any> = {};
+    const result = [];
     for (const key of keys) {
-      const parts = key.split(':');
-      if (parts.length < 2) continue;
-      const secondPrefix = `${parts[0]}:${parts[1]}`;
-      if (!secondLevel[secondPrefix]) {
-        secondLevel[secondPrefix] = {
-          key: secondPrefix,
-          fullKey: key,
-          count: 0,
-          type: parts.length > 2 ? 'prefix' : 'key',
-        };
-      }
-      secondLevel[secondPrefix].count++;
+      result.push({
+        cacheKey: key,
+        type: 'key',
+        ttl: await this.client.ttl(key),
+        size: await this.getKeySize(key),
+      });
     }
-    return ResultData.ok(Object.values(secondLevel));
+    return ResultData.ok(result);
   }
 
   /**
@@ -190,6 +185,40 @@ export class CacheService {
     }
     const deleted = await this.client.del(...keys);
     return ResultData.ok({ deleted });
+  }
+
+  /**
+   * 受保护的缓存键前缀：清理业务缓存时需保留，
+   * 避免登出全部用户、丢失验证码/限流/定时锁/密码错误计数/重复提交校验/太虚索引队列等。
+   * taixu: 对应 document-index.types.ts 中的索引队列、入队集合、状态与暂停标志。
+   */
+  private readonly PROTECTED_PREFIXES = [
+    CacheEnum.LOGIN_TOKEN_KEY,
+    CacheEnum.CAPTCHA_CODE_KEY,
+    CacheEnum.RATE_LIMIT_KEY,
+    CacheEnum.CRON_LOCK_KEY,
+    CacheEnum.PWD_ERR_CNT_KEY,
+    CacheEnum.REPEAT_SUBMIT_KEY,
+    'taixu:',
+  ];
+
+  /**
+   * 清理业务缓存：删除除受保护前缀以外的全部 Redis 键
+   * @returns 删除数量
+   */
+  async clearBusinessCache() {
+    const allKeys = await this.scanKeys('*');
+    if (!allKeys.length) {
+      return ResultData.ok({ count: 0, message: '无业务缓存' });
+    }
+    const deletable = allKeys.filter(
+      (key) => !this.PROTECTED_PREFIXES.some((p) => key.startsWith(p)),
+    );
+    if (!deletable.length) {
+      return ResultData.ok({ count: 0, message: '无业务缓存' });
+    }
+    const count = await this.client.del(...deletable);
+    return ResultData.ok({ count, message: '缓存已清理' });
   }
 
   /**

@@ -22,14 +22,14 @@ const ViewOperlogWrapperForm: React.FC<ViewOperlogWrapperForm> = (props) => {
         valueType="text"
         span={2}
       >
-        {values.serviceName}
+        {values.app}
       </ProDescriptions.Item>
       <ProDescriptions.Item
         label={<T id="page.operlog.field.loginInfo" />}
         valueType="text"
         span={2}
       >
-        {values.username} / {values.ip} ({values.ipLocation})
+        {values.username} / {values.ip} ({values.ip_location})
       </ProDescriptions.Item>
       <ProDescriptions.Item
         label={<T id="page.operlog.field.url" />}
@@ -66,7 +66,7 @@ const ViewOperlogWrapperForm: React.FC<ViewOperlogWrapperForm> = (props) => {
         label={<T id="page.operlog.field.req" />}
         valueType="jsonCode"
       >
-        {values.requestData}
+        {values.request_data}
       </ProDescriptions.Item>
       <ProDescriptions.Item
         label={<T id="page.operlog.field.res" />}

@@ -27,6 +27,6 @@ export class ServerController {
   @ApiOperation({ summary: '清理缓存' })
   @Post('clear')
   clearCache() {
-    return this.serverService.clearCache();
+    return this.cacheService.clearBusinessCache();
   }
 }

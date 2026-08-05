@@ -22,4 +22,10 @@ export default {
   'menu.monitor.server': 'Server Monitoring',
   'menu.monitor.cache': 'Cache Monitoring',
   'menu.monitor.cacheList': 'Cache List',
+  'menu.system.tenant': 'Tenant Management',
+  'menu.system.plugin': 'Plugin Management',
+  'menu.monitor.attachment': 'Attachment Management',
+  'menu.monitor.database': 'Database Tables',
+  'menu.monitor.emailLog': 'Email Logs',
+  'menu.monitor.redis': 'Redis Monitor',
 };

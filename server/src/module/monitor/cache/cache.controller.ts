@@ -1,4 +1,4 @@
-import { Controller, Get, Delete, Body, Query } from '@nestjs/common';
+import { Controller, Get, Delete, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { CacheService } from './cache.service';
 
@@ -22,7 +22,7 @@ export class CacheController {
 
   @ApiOperation({ summary: 'Redis浏览器-二级目录' })
   @Get('browser/level2')
-  getLevel2(@Query('prefix') prefix: string) {
+  getLevel2(@Query('pattern') prefix: string) {
     return this.cacheService.getSecondLevelKeys(prefix);
   }
 
@@ -40,10 +40,10 @@ export class CacheController {
 
   @ApiOperation({ summary: 'Redis浏览器-删除Key' })
   @Delete('browser/delete')
-  deleteKey(@Body() body: { key?: string; pattern?: string }) {
-    if (body?.pattern) {
-      return this.cacheService.deleteByPattern(body.pattern);
+  deleteKey(@Query('key') key?: string, @Query('pattern') pattern?: string) {
+    if (pattern) {
+      return this.cacheService.deleteByPattern(pattern);
     }
-    return this.cacheService.deleteBrowserKey(body?.key);
+    return this.cacheService.deleteBrowserKey(key);
   }
 }

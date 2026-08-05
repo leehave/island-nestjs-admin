@@ -137,7 +137,7 @@ const CacheKeyList: React.FC<CacheKeyListProps> = ({ cacheName }) => {
 
           const { code, data } = await queryCacheKeyList(params.cacheName);
           return {
-            data: data.map((it: CacheKey) => ({ cacheKey: it })),
+            data: (data || []).map((it: any) => ({ cacheKey: it.cacheKey ?? it })),
             success: code === 200,
           };
         }}
@@ -159,7 +159,12 @@ const CacheKeyList: React.FC<CacheKeyListProps> = ({ cacheName }) => {
         readonly
         request={async () => {
           const res = await queryCacheValue(cacheName, selectedRowKey);
-          return res.data;
+          const d = res.data || {};
+          return {
+            cacheName,
+            cacheKey: selectedRowKey,
+            cacheValue: d.value ?? '',
+          };
         }}
         drawerProps={{
           destroyOnHidden: true,

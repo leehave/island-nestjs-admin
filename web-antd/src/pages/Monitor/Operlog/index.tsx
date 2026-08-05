@@ -52,7 +52,7 @@ export const Component: React.FC<unknown> = () => {
     },
     {
       title: <T id="page.operlog.field.module" />,
-      dataIndex: 'serviceName',
+      dataIndex: 'app',
       valueType: 'text',
       width: 180,
     },
@@ -105,7 +105,7 @@ export const Component: React.FC<unknown> = () => {
     },
     {
       title: <T id="page.operlog.field.operTime" />,
-      dataIndex: 'createTime',
+      dataIndex: 'create_time',
       valueType: 'dateTime',
       width: 220,
     },

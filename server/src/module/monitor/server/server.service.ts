@@ -232,10 +232,4 @@ export class ServerService {
     });
   }
 
-  async clearCache() {
-    return ResultData.ok({
-      cleared: { opcache: false, stat_cache: true },
-      message: '缓存已清理',
-    });
-  }
 }

@@ -123,6 +123,7 @@ export default {
   'page.config.field.configKey': 'Config Key',
   'page.config.field.configValue': 'Config Value',
   'page.config.field.isSys': 'System Built-in',
+  'page.config.field.inputType': 'Input Type',
   'page.config.refresh': 'Refresh Cache',
   'page.config.title': 'Configuration',
 

@@ -136,9 +136,9 @@ export const queryCacheKeyList = (cacheName) => {
 
 // 查询缓存键值
 export const queryCacheValue = (cacheName, cacheKey) => {
-  return request('/api/core/server/redis/browser/level3', {
+  return request('/api/core/server/redis/browser/key-info', {
     method: 'GET',
-    params: { pattern: cacheName, key: cacheKey },
+    params: { key: cacheKey },
   });
 };
 
@@ -162,5 +162,107 @@ export const deleteCacheName = (cacheName) => {
   return request('/api/core/server/redis/browser/delete', {
     method: 'DELETE',
     params: { pattern: cacheName },
+  });
+};
+
+// 查询邮件日志分页列表
+export const queryEmailLogPage = (
+  params: PageField & {
+    from?: string;
+    email?: string;
+    status?: string;
+  },
+  options?: { [key: string]: any },
+) => {
+  return request('/api/core/email/index', {
+    method: 'GET',
+    params: { ...params },
+    ...(options || {}),
+  });
+};
+
+// 删除邮件日志
+export const deleteEmailLog = (ids: number[]) => {
+  return request('/api/core/email/destroy', {
+    method: 'DELETE',
+    data: { ids },
+  });
+};
+
+// 查询 Redis 监控信息
+export const queryRedisInfo = () => {
+  return request('/api/core/server/redis', {
+    method: 'GET',
+  });
+};
+
+// 查询数据表列表
+export const queryDatabaseTableList = (params?: any) => {
+  return request('/api/core/database/table/list', {
+    method: 'GET',
+    params: { ...params },
+  });
+};
+
+// 查询数据源信息
+export const queryDatabaseDataSource = () => {
+  return request('/api/core/database/table/dataSource', {
+    method: 'GET',
+  });
+};
+
+// 查询表详细信息
+export const queryDatabaseDetailed = (params?: any) => {
+  return request('/api/core/database/table/detailed', {
+    method: 'GET',
+    params: { ...params },
+  });
+};
+
+// 查询建表语句
+export const queryDatabaseCreateSql = (params?: any) => {
+  return request('/api/core/database/table/createSql', {
+    method: 'GET',
+    params: { ...params },
+  });
+};
+
+// 优化表
+export const optimizeDatabaseTable = (data?: any) => {
+  return request('/api/core/database/table/optimize', {
+    method: 'POST',
+    data,
+  });
+};
+
+// 清除表碎片
+export const fragmentDatabaseTable = (data?: any) => {
+  return request('/api/core/database/table/fragment', {
+    method: 'POST',
+    data,
+  });
+};
+
+// 查询回收站列表
+export const queryDatabaseRecycleList = (params?: any) => {
+  return request('/api/core/database/recycle/list', {
+    method: 'GET',
+    params: { ...params },
+  });
+};
+
+// 销毁回收站数据
+export const destroyRecycle = (data?: any) => {
+  return request('/api/core/database/recycle/destroy', {
+    method: 'POST',
+    data,
+  });
+};
+
+// 恢复回收站数据
+export const recoveryRecycle = (data?: any) => {
+  return request('/api/core/database/recycle/recovery', {
+    method: 'POST',
+    data,
   });
 };

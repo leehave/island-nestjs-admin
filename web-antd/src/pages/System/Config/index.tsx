@@ -26,7 +26,6 @@ import {
   ProFormSelect,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { queryDictsByType } from '@/services/dict';
 import { queryConfigPage, deleteConfig } from '@/services/config';
 import { PermissionGuard } from '@/components/Layout';
 import { rawT, useT, T } from '@/locales';
@@ -84,16 +83,17 @@ export const Component: React.FC<unknown> = () => {
       hideInSearch: true,
     },
     {
-      title: <T id="page.config.field.isSys" />,
+      title: <T id="page.config.field.inputType" />,
       dataIndex: 'input_type',
       valueType: 'select',
       width: 120,
-      request: async () => {
-        const res = await queryDictsByType('sys_yes_no');
-        return res.data.map((dict) => ({
-          label: dict.label,
-          value: dict.value,
-        }));
+      valueEnum: {
+        text: { text: <T id="dict.config.inputType.text" /> },
+        textarea: { text: <T id="dict.config.inputType.textarea" /> },
+        select: { text: <T id="dict.config.inputType.select" /> },
+        switch: { text: <T id="dict.config.inputType.switch" /> },
+        number: { text: <T id="dict.config.inputType.number" /> },
+        password: { text: <T id="dict.config.inputType.password" /> },
       },
     },
     {
@@ -198,11 +198,15 @@ export const Component: React.FC<unknown> = () => {
       />
       <ProFormSelect
         name="input_type"
-        label={<T id="page.config.field.isSys" />}
-        initialValue="Y"
+        label={<T id="page.config.field.inputType" />}
+        initialValue="text"
         options={[
-          { label: t('dict.option.yes'), value: 'Y' },
-          { label: t('dict.option.no'), value: 'N' },
+          { label: t('dict.config.inputType.text'), value: 'text' },
+          { label: t('dict.config.inputType.textarea'), value: 'textarea' },
+          { label: t('dict.config.inputType.select'), value: 'select' },
+          { label: t('dict.config.inputType.switch'), value: 'switch' },
+          { label: t('dict.config.inputType.number'), value: 'number' },
+          { label: t('dict.config.inputType.password'), value: 'password' },
         ]}
       />
       <ProFormTextArea

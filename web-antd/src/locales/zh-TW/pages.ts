@@ -117,6 +117,7 @@ export default {
   'page.config.field.configKey': '參數鍵名',
   'page.config.field.configValue': '參數鍵值',
   'page.config.field.isSys': '系統內建',
+  'page.config.field.inputType': '輸入類型',
   'page.config.refresh': '重新整理快取',
   'page.config.title': '參數',
 

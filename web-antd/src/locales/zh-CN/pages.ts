@@ -117,6 +117,7 @@ export default {
   'page.config.field.configKey': '参数键名',
   'page.config.field.configValue': '参数键值',
   'page.config.field.isSys': '系统内置',
+  'page.config.field.inputType': '输入类型',
   'page.config.refresh': '刷新缓存',
   'page.config.title': '参数',
 
